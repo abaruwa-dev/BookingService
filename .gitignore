@@ -1,0 +1,13 @@
+/target/
+*.class
+/nbproject/private/
+/nbactions-private.xml
+.env
+.env.*
+!.env.example
+/secrets/
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.key
