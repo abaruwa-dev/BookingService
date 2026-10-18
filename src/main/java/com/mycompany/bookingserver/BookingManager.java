@@ -25,7 +25,7 @@ public class BookingManager {
     
     
     // Create a Booking with details
-    public synchronized String addBooking(Booking b){
+    public synchronized String addBooking(Booking b) throws InvalidCommandException {
         
         for (Booking existing : bookings) {
         if (existing.getMember().equals(b.getMember()) &&
@@ -33,7 +33,7 @@ public class BookingManager {
             existing.getDate().equals(b.getDate()) &&
             existing.getTime().equals(b.getTime())) {
 
-            return "Duplicate booking found.";
+           throw new InvalidCommandException("Duplicate Bookingw found.");
         }
     }
         
@@ -43,7 +43,7 @@ public class BookingManager {
     }
     
     // Cancel a Booking with Member
-    public synchronized String cancelBooking(String member, String workshop, String date, String time){
+    public synchronized String cancelBooking(String member, String workshop, String date, String time) throws InvalidCommandException {
         for(Booking b : bookings){
             if(b.getMember().equals(member) )
                 if(b.getWorkshop().equals(workshop))
@@ -54,16 +54,17 @@ public class BookingManager {
                              return "Booking Cancled Successfuly " + listBookings(b.getMember());
         }
             }
-                   return "Booking not found" ;
+                       throw new InvalidCommandException("Booking not found.");
+                
         }
     
     
     // List All Bookings for Members 
-    public synchronized String listBookings(String member){
+    public synchronized String listBookings(String member) throws InvalidCommandException {
            
        String listBookings = "";
         
-       for(Booking b : bookings){  
+       for(Booking b : bookings) {  
            if(b.getMember().equals(member)){
                  listBookings += b.getDetails()+" ; ";  
            }
@@ -71,7 +72,9 @@ public class BookingManager {
             }
                 // if theres no results return no Bookings
                 if (listBookings.isEmpty()) {
-                    return member + " has no bookings.";
+                    
+                       throw new InvalidCommandException("Booking not found.");
+                    
             }
            
        

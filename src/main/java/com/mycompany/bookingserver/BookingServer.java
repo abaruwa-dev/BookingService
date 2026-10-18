@@ -18,14 +18,21 @@ public class BookingServer {
     private static final int PORT = 5003;
     private static int clientConnections = 0;
     
+    
     public static void main(String[] args) {
         
         System.out.println("Opening port...");
 
         BookingManager manager = new BookingManager();
         
+        
+        
         try {
+            
+            serverSocket = new ServerSocket(PORT);
+            
             while (true) {
+                
         // Wait for the next client.
         Socket link = serverSocket.accept();
         clientConnections++;
